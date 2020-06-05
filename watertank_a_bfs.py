@@ -41,10 +41,6 @@ def search(starting_node, containers_volume, vol_wanted, check_dict):
     if check_args(containers_volume, vol_wanted):
         while len(q) != 0:
             path = q.popleft()
-            print(path)
-            print(path[-1])
-            print(get_index(path[-1]))
-            print(check_dict)
             check_dict[get_index(path[-1])] = True
 
             # print other path
