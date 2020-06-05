@@ -60,7 +60,7 @@ def search(starting_node, containers_volume, vol_wanted, check_dict):
 
         # If accomplished, print the path
         if accomplished:
-            print_path(target, containers_volume)
+            print_path(target)
         else:
             print("No Solution")
 
@@ -134,7 +134,7 @@ def next_step(containers_volume, path, check_dict):
 
     return result
 
-def write_transition(old, new, containers_volume):
+def write_transition(old, new):
 
     first_cont = old[0]
     second_cont = old[1]
@@ -159,12 +159,12 @@ def write_transition(old, new, containers_volume):
                 return f'*->A :'
 
 
-def print_path(path, containers_volume):
+def print_path(path):
 
     print(f'Solution in {len(path)-1} steps')
     for i in range(0, len(path) - 1):
         #print(i + 1, ":", transition(path[i], path[i + 1], containers_volume), path[i + 1])
-        print(write_transition(path[i], path[i + 1], containers_volume), tuple(path[i + 1]))
+        print(write_transition(path[i], path[i + 1]), tuple(path[i + 1]))
 
 def is_vol_wanted(path, vol_wanted):
 
