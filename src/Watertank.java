@@ -7,19 +7,10 @@ public class Watertank {
         // General Parameters
         ArrayList<Integer> containers_volume = new ArrayList<Integer>();
         ArrayList<ArrayList<String>> steps = new ArrayList<ArrayList<String>>();
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println("Entrer le nombre de volume désiré");
-//        int vol_wanted=sc.nextInt();
-//
-//        System.out.println("Entrer le premier volume ");
-//        int temp=sc.nextInt();
-//        containers_volume.add(temp);
-//        System.out.println("Entrer le deuxième volume ");
-//        temp=sc.nextInt();
-//        containers_volume.add(temp);
-        int vol_wanted=8;
-        containers_volume.add(7);
-        containers_volume.add(9);
+
+        int vol_wanted=Integer.parseInt(args[0]);
+        containers_volume.add(Integer.parseInt(args[1]));
+        containers_volume.add(Integer.parseInt(args[2]));
         count(containers_volume, vol_wanted,steps);
 
     }
