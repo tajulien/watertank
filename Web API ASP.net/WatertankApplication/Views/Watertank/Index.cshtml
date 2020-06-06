@@ -1,0 +1,35 @@
+﻿@model WebApplication1.Models.WaterModels
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div> 
+        @using (Html.BeginForm())
+        {
+            <h1> Watertank </h1>
+         
+            <p> Watertank 1 Volume</p>
+            @Html.TextBox("vol_1", Model.water1)
+
+            <p> Watertank 2 Volume </p>
+            @Html.TextBox("vol_2", Model.water2)
+
+            <p> Volume wanted </p>
+            @Html.TextBox("vol_target", Model.water_wanted)
+
+            <p> <input type="submit" value="Valider" /> </p>
+        }
+         <p>@ViewData["message"] </p>
+        
+    </div>
+</body>
+</html>

@@ -97,7 +97,6 @@ public class Watertank {
         // With 2 tanks, there is two path to reach the solution
         // We try both solution by filling the bigger tank and then the smaller one
         // And then take the one with the smallest count of steps.
-        ArrayList cont_vol_rev = new ArrayList<Integer>();
         int sol_1 = transfer(cont_vol, vol_wanted, steps);
         Collections.reverse(cont_vol);
         int sol_2 = transfer(cont_vol, vol_wanted, steps);
