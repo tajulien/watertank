@@ -10,25 +10,25 @@
 
 ## Java 
 ###  Files in src folder   
-- __watertank.java__ \
+- __Watertank.java__ \
 Brute force method with watertank.java : just filling one tank and looping one of the three steps available until we got the solution.\
 We do the same with the second tank and we take the minimum of the two path which is the lowest steps possible.\
 To start watertank.java :
 ```
-Watertank\src> java watertank.java args1 args2 args3
+Watertank\src> java Watertank.java args1 args2 args3
 ```
 where :\
 `args1` : Tank volume 1 \
 `args2` : Tank volume 2\
 `args3` : Volume desired
 
-- __watertank_a_bfs.java__ \
+- __Watertank_a_bfs.java__ \
 Dynamic programming method with watertank_a_bfs.py : we are trying to recreate all the nodes available and we search all the neighborhood.\
 We are trying to get the lowest path to the goal.
 
 To start watertank_a_bfs.java :
 ```
-Watertank\src> java watertank_a_bfs.java args1 args2 args3
+Watertank\src> java Watertank_a_bfs.java args1 args2 args3
 ```
 where :\
 `args1` : Tank volume 1 \
