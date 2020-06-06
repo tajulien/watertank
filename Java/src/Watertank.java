@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
+// brute force method to solve watertank riddle
+
 public class Watertank {
 
     public static void main(String[] args) {
@@ -84,17 +86,14 @@ public class Watertank {
     public static int count(ArrayList cont_vol, int vol_wanted,  ArrayList<ArrayList<String>> steps)
     {
         // If water required is superior of the biggest tank, there's no solution
-        if (vol_wanted > Math.max((int)cont_vol.get(0), (int)cont_vol.get(1))){
+        // With the Bezout Lemma we can check if there's a solution such as + by = z
+        // Lemma : if x and y are nonzero integers and g = gcd(x,y),
+        // then there exist integers a and b such that ax+by=g.
+        if (vol_wanted > Math.max((int)cont_vol.get(0), (int)cont_vol.get(1)) || (vol_wanted % (gcd((int)cont_vol.get(0), (int)cont_vol.get(1))) != 0)) {
             System.out.println("No solution");
             return 0;
         }
-        //With the Bezout Lemma we can check if there's a solution such as + by = z
-        // Lemma : if x and y are nonzero integers and g = gcd(x,y),
-        // then there exist integers a and b such that ax+by=g.
-        else if (vol_wanted % (gcd((int)cont_vol.get(0), (int)cont_vol.get(1))) != 0){
-            System.out.println("No solution");
-            return  0;
-        }
+
         // With 2 tanks, there is two path to reach the solution
         // We try both solution by filling the bigger tank and then the smaller one
         // And then take the one with the smallest count of steps.

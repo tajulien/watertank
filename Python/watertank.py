@@ -55,15 +55,13 @@ def transfer(cont_vol, x, n):
 
 def count(cont_vol, vol_wanted):
     # If water required is superior of the biggest tank, there's no solution
-    if vol_wanted > max(cont_vol[0], cont_vol[1]):
-        return ("No solution")
-
     # With the Bezout Lemma we can check if there's a solution such as + by = z
     # Lemma : if x and y are nonzero integers and g = gcd(x,y),
     # then there exist integers a and b such that ax+by=g.
 
-    elif (vol_wanted % (gcd(cont_vol[0], cont_vol[1])) is not 0):
-        return "No solutions"
+    if vol_wanted > max(cont_vol[0], cont_vol[1]) or (vol_wanted % (gcd(cont_vol[0], cont_vol[1])) is not 0):
+        print("No solution")
+        return
 
     # With 2 tanks, there is two path to reach the solution
     # We try both solution by filling the bigger tank and then the smaller one

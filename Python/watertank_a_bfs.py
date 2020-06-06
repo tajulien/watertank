@@ -8,26 +8,26 @@ containers_volume = [int(sys.argv[1]), int(sys.argv[2])]
 check_dict = {}
 starting_node = [[0, 0]]
 
+
 # GCD function needed to check if there is a solution
 def gcd(a, b):
     if b == 0:
         return a
     return gcd(b, a % b)
 
+
 def check_args(cont_vol, vol_wanted):
-        # If water required is superior of the biggest tank, there's no solution
-        if vol_wanted > max(cont_vol[0], cont_vol[1]):
-            print("No solution")
-            return False
+    """
+        If water required is superior of the biggest tank, there's no solution
+        With the Bezout Lemma we can check if there's a solution such as + by = z
+        Lemma : if x and y are nonzero integers and g = gcd(x,y),
+        then there exist integers a and b such that ax+by=g.
+    """
+    if vol_wanted > max(cont_vol[0], cont_vol[1]) or (vol_wanted % (gcd(cont_vol[0], cont_vol[1])) is not 0):
+        print("No solution")
+        return False
+    return True
 
-        # With the Bezout Lemma we can check if there's a solution such as + by = z
-        # Lemma : if x and y are nonzero integers and g = gcd(x,y),
-        # then there exist integers a and b such that ax+by=g.
-
-        elif (vol_wanted % (gcd(cont_vol[0], cont_vol[1])) is not 0):
-            print("No solution")
-            return False
-        return True
 
 def search(starting_node, containers_volume, vol_wanted, check_dict):
     # Starting state
@@ -44,7 +44,7 @@ def search(starting_node, containers_volume, vol_wanted, check_dict):
             check_dict[get_index(path[-1])] = True
 
             # print other path
-            #if len(path) >= 2:
+            # if len(path) >= 2:
             #    print(transition(path[-2], path[-1], containers_volume), path[-1])
 
             # If target is reached, exit the loop
@@ -63,16 +63,16 @@ def search(starting_node, containers_volume, vol_wanted, check_dict):
             print_path(target)
         else:
             print("No Solution")
+            return
+
 
 def been_there(node, check_dict):
-
     # Check if a node had already been visited
 
     return check_dict.get(get_index(node), False)
 
 
 def next_step(containers_volume, path, check_dict):
-
     # Finding the next path with checking the ones already checked
 
     result = []
@@ -134,8 +134,8 @@ def next_step(containers_volume, path, check_dict):
 
     return result
 
-def write_transition(old, new):
 
+def write_transition(old, new):
     first_cont = old[0]
     second_cont = old[1]
     new_first_cont = new[0]
@@ -160,20 +160,20 @@ def write_transition(old, new):
 
 
 def print_path(path):
-
-    print(f'Solution in {len(path)-1} steps')
+    print(f'Solution in {len(path) - 1} steps')
     for i in range(0, len(path) - 1):
-        #print(i + 1, ":", transition(path[i], path[i + 1], containers_volume), path[i + 1])
+        # print(i + 1, ":", transition(path[i], path[i + 1], containers_volume), path[i + 1])
         print(write_transition(path[i], path[i + 1]), tuple(path[i + 1]))
 
-def is_vol_wanted(path, vol_wanted):
 
+def is_vol_wanted(path, vol_wanted):
     # Checking the last node and return True if we reached the targeted value
     return path[-1][0] == vol_wanted or path[-1][1] == vol_wanted
 
-def get_index(node):
 
+def get_index(node):
     # generating a random number for the key index using " ** " to be sure there's no duplicate
-    return 3**node[0] * 4**node[1]
+    return 3 ** node[0] * 4 ** node[1]
+
 
 search(starting_node, containers_volume, vol_wanted, check_dict)
