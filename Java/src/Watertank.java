@@ -8,9 +8,9 @@ public class Watertank {
         ArrayList<Integer> containers_volume = new ArrayList<Integer>();
         ArrayList<ArrayList<String>> steps = new ArrayList<ArrayList<String>>();
 
-        int vol_wanted=Integer.parseInt(args[0]);
+        containers_volume.add(Integer.parseInt(args[0]));
         containers_volume.add(Integer.parseInt(args[1]));
-        containers_volume.add(Integer.parseInt(args[2]));
+        int vol_wanted=Integer.parseInt(args[2]);
         count(containers_volume, vol_wanted,steps);
 
     }
