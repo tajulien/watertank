@@ -1,36 +1,38 @@
+import com.sun.tools.jconsole.JConsoleContext;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import javax.lang.model.type.ArrayType;
 import java.lang.reflect.Array;
 import java.util.*;
 
-// dynamic programming method using Breadth-First Search (BFS) Algorithm
-
-public class Watertank_a_bfs {
+public class waterdub {
 
     public static void main(String[] args) {
-        // General Parameters
-        ArrayList<Integer> containers_volume = new ArrayList<Integer>();
-        ArrayList<ArrayList<String>> steps = new ArrayList<ArrayList<String>>();
-
-        containers_volume.add(Integer.parseInt(args[0]));
-        containers_volume.add(Integer.parseInt(args[1]));
-        int vol_wanted=Integer.parseInt(args[2]);
-
+        int vol_wanted=0;
+        ArrayList<Integer> containers_volume= new ArrayList<>();
+        //Scanner sc = new Scanner(System.in);
+        //System.out.println("Entrez le nombre de volume désiré");
+        //vol_wanted=sc.nextInt();
+        vol_wanted = 4;
+        //System.out.println("entrer le premier volume ");
+        //int temp=sc.nextInt();
+        containers_volume.add(3);
+        //System.out.println("entrer le deuxième volume ");
+        //temp=sc.nextInt();
+        containers_volume.add(5);
         ArrayList <ArrayList<Integer>> starting_node=new ArrayList<>();
         ArrayList <Integer> starting_node_temp=new ArrayList<>();
         starting_node_temp.add(0);
         starting_node_temp.add(0);
-        starting_node=(ArrayList) starting_node_temp;
+        starting_node=(ArrayList)   starting_node_temp;
         HashMap check_dict = new HashMap();
 
 
         search(starting_node, containers_volume, vol_wanted, check_dict);
 
+
+
     }
 
-    // # GCD function needed to check if there is a solution
     public static int gcd(int a, int b)
     {
         if(b==0)
@@ -59,22 +61,23 @@ public class Watertank_a_bfs {
 
     }
 
-
     public static void search(ArrayList starting_node, ArrayList containers_volume, int vol_wanted, HashMap check_dict)
     {
         ArrayList<Integer> target=new ArrayList<>();
         ArrayList<ArrayList<Integer>> q =new ArrayList<>();
-        ArrayList path = new ArrayList<>();
-        ArrayList path_2;
+        ArrayList path=new ArrayList<>();
+        ArrayList path_2 = new ArrayList();
         ArrayList<ArrayList<Integer>> next_moves = new ArrayList<>();
         boolean accomplished= false;
 
         q.add(starting_node);
+//        System.out.println(q);
 
         if(check_arg(containers_volume, vol_wanted))
         {
             while(q.size() != 0) {
                 path_2 = (ArrayList) q.get(0);
+                System.out.println(path_2.size());
                 ArrayList comp = new ArrayList();
                 comp.add(0);
                 comp.add(0);
@@ -84,14 +87,20 @@ public class Watertank_a_bfs {
                     path.add(new ArrayList(path_2));
                 }
                 else{
-                    path = (new ArrayList(path_2));
+                path = (new ArrayList(path_2));
                 }
-
+                System.out.println("le path2" + path_2);
+                System.out.println("le q" + q);
+                System.out.println("le path"+path);
                 q.remove(0);
+                System.out.println("le q apres remove" + q);
                 ArrayList last_path = new ArrayList();
                 last_path = (ArrayList) path.get(path.size() - 1);
+                System.out.println("le last path"+last_path);
                 double b = get_index(last_path);
+                System.out.println(b);
                 check_dict.put(b, true);
+                System.out.println(check_dict);
                 if (is_vol_wanted(path, vol_wanted)) {
                     accomplished = true;
                     target = path;
@@ -99,21 +108,25 @@ public class Watertank_a_bfs {
                 }
 
                 next_moves = next_step(containers_volume, path, check_dict);
+                System.out.println(("le next move" + next_moves));
                 for (int i = 0; i < next_moves.size(); i++) {
+                    System.out.println(q);
+                    System.out.println(next_moves.get(i));
                     q.add(next_moves.get(i));
-
+                    System.out.println(q);
                 }
+                System.out.println(q);
             }
             if(accomplished)
-            {
-                print_path(target);
-            }
+                {
+                    print_path(target);
+                }
             else
-            {
-                System.out.println("no solution");
+                {
+                    System.out.println("no solution");
+                }
             }
         }
-    }
 
 
 
@@ -128,9 +141,11 @@ public class Watertank_a_bfs {
 
         if (check_dict.containsKey(a))
         {
+            System.out.println("true");
             return true;
         }
         else {
+            System.out.println(("false"));
             //check_dict.put(a,True);
             //System.out.println(check_dict);
             return false;
@@ -300,6 +315,4 @@ public class Watertank_a_bfs {
     }
 
 }
-
-
 
