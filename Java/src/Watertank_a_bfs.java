@@ -86,24 +86,27 @@ public class Watertank_a_bfs {
                 else{
                     path = (new ArrayList(path_2));
                 }
-
                 q.remove(0);
                 ArrayList last_path = new ArrayList();
                 last_path = (ArrayList) path.get(path.size() - 1);
                 double b = get_index(last_path);
                 check_dict.put(b, true);
+
+                // If target is reached, exit the loop
                 if (is_vol_wanted(path, vol_wanted)) {
                     accomplished = true;
                     target = path;
                     break;
                 }
 
+                // If target no reached, getting the next move
                 next_moves = next_step(containers_volume, path, check_dict);
                 for (int i = 0; i < next_moves.size(); i++) {
                     q.add(next_moves.get(i));
 
                 }
             }
+            // If accomplished, print the path
             if(accomplished)
             {
                 print_path(target);
@@ -120,24 +123,20 @@ public class Watertank_a_bfs {
 
 
     public static boolean been_there(ArrayList node, HashMap check_dict)
+            // Check if a node had already been visited
     {
         double a=get_index(node);
-//        System.out.println(node);
-//        System.out.println(a);
-//        System.out.println(check_dict);
-
         if (check_dict.containsKey(a))
         {
             return true;
         }
         else {
-            //check_dict.put(a,True);
-            //System.out.println(check_dict);
             return false;
         }
     }
 
     public static ArrayList next_step(ArrayList containers_volume, ArrayList path, HashMap check_dict)
+            // Finding the next path with checking the ones already checked
     {
         ArrayList result=new ArrayList<>();
         ArrayList<ArrayList> next_node=new ArrayList<>();
@@ -146,28 +145,22 @@ public class Watertank_a_bfs {
 
         int max_first_cont= (int) containers_volume.get(0);
         int max_second_cont= (int) containers_volume.get(1);
-        //ArrayList temp = new ArrayList();
-        //System.out.println(temp);
-//        System.out.println(path);
+
 
         last_path = (ArrayList) path.get(path.size()-1);
-        int first_cont=(int) last_path.get(0);
-        int second_cont=(int) last_path.get(1);
-//        System.out.println(first_cont);
-//        System.out.println(second_cont);
-//        System.out.println(max_first_cont);
-//        System.out.println(max_second_cont);
+        int first_cont=(int) last_path.get(0);  // initial amount in the first tank
+        int second_cont=(int) last_path.get(1);  // initial amount in the second tank
 
+
+        // fill in the first tank
         node.add(max_first_cont);
         node.add(second_cont);
-        System.out.println(node);
         if(!been_there(node, check_dict)){
             next_node.add(new ArrayList(node));
         }
         node.clear();
-//        System.out.println(next_node);
-//        System.out.println(node);
 
+        // fill in the second tank
         node.add(first_cont);
         node.add(max_second_cont);
         if(!been_there(node, check_dict)){
@@ -176,6 +169,7 @@ public class Watertank_a_bfs {
         }
         node.clear();
 
+        // Transfer second tank to first tank (B => A)
         node.add(Math.min(max_first_cont, first_cont + second_cont));
         node.add(second_cont-((int) node.get(0)-first_cont));
         if(!been_there(node, check_dict))
@@ -184,6 +178,7 @@ public class Watertank_a_bfs {
         }
         node.clear();
 
+        // Transfer first tank to second tank (A => B)
         node.add(Math.min(first_cont + second_cont, max_second_cont));
         node.add(0,second_cont-((int) node.get(0)-first_cont));
         if(!been_there(node, check_dict))
@@ -192,6 +187,7 @@ public class Watertank_a_bfs {
         }
         node.clear();
 
+        // Empty the first tank
         node.add(0);
         node.add(second_cont);
         if(!been_there(node,check_dict))
@@ -200,24 +196,23 @@ public class Watertank_a_bfs {
         }
         node.clear();
 
+        // Empty the second tank
         node.add(first_cont);
         node.add(0);
         if(!been_there(node, check_dict)){
             next_node.add(new ArrayList(node));
         }
-        System.out.println("le next node est"+next_node);
-        System.out.println(next_node.size());
+
         if(next_node.size() != 0);
         {
+            // Create the list of possible next path
             for(int i=0; i<next_node.size(); i++)
             {
                 //temp=path;
                 ArrayList temp = new ArrayList();
                 temp = new ArrayList(path);
-                System.out.println(temp);
                 temp.add(next_node.get(i));
                 result.add(new ArrayList(temp));
-                System.out.println(result);
                 temp.removeAll(result);
             }
 
@@ -282,20 +277,22 @@ public class Watertank_a_bfs {
 
     public static boolean is_vol_wanted(ArrayList path, int vol_wanted)
     {
+        //Checking the last node and return True if we reached the targeted value
+
         Integer temp4=0;
         Integer temp5=0;
-        System.out.println(path);
         ArrayList last_path = new ArrayList();
         last_path = (ArrayList) path.get(path.size()-1);
         temp4= (int) last_path.get(0);
         temp5= (int) last_path.get(1);
+
         return temp4==vol_wanted || temp5==vol_wanted;
 
     }
 
     public static double get_index(ArrayList node)
     {
-        System.out.println(node);
+        // generating a random number for the key index using pow to be sure there's no duplicate
         return Math.pow(3,(int) node.get(0)) * Math.pow(4,(int) node.get(1));
     }
 
