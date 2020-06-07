@@ -12,14 +12,14 @@ namespace WebApplication1.Controllers.Watertank
         // GET: Watertank
         public ActionResult Index()
         {
-            WaterModels client = new WaterModels();
-            return View(client);
+            WaterModels twotank = new WaterModels();
+            return View(twotank);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Index(WaterModels visiteur)
+        public ActionResult Index(WaterModels starter)
         {
-            WaterModels client = new WaterModels();
+            WaterModels twotank = new WaterModels();
 
             string vol_1 = "";
             string vol_2 = "";
@@ -28,12 +28,12 @@ namespace WebApplication1.Controllers.Watertank
             vol_1 = Request.Form["vol_1"];
             vol_2 = Request.Form["vol_2"];
             vol_target = Request.Form["vol_target"];
-            client.water1 = vol_1;
-            client.water2 = vol_2;
-            client.water_wanted = vol_target;
+            twotank.water1 = vol_1;
+            twotank.water2 = vol_2;
+            twotank.water_wanted = vol_target;
 
-            ViewData["message"] =  GetMyResult(int.Parse(vol_1), int.Parse(vol_2), int.Parse(vol_target));
-            return View("Index", client);
+            ViewData["message"] = MvcHtmlString.Create(GetMyResult(int.Parse(vol_1), int.Parse(vol_2), int.Parse(vol_target)));
+            return View("Index", twotank);
 
         }
 
@@ -45,9 +45,9 @@ namespace WebApplication1.Controllers.Watertank
             containers_volume.Add(var1);
             containers_volume.Add(var2);
             int vol_wanted = var3;
-            string resultat = String.Join("< br />", count(containers_volume, vol_wanted, steps));
-            Console.WriteLine(resultat);
-            return String.Join(" || ", count(containers_volume, vol_wanted, steps));
+            // string resultat = String.Join("< br />", count(containers_volume, vol_wanted, steps));
+            // Console.WriteLine(resultat);
+            return String.Join("<br />", count(containers_volume, vol_wanted, steps));
 
 
         }
@@ -141,7 +141,7 @@ namespace WebApplication1.Controllers.Watertank
 
             if (sol_1 < sol_2)
             {
-                foreach(String st in steps[1])
+                foreach(String st in steps[0])
                 {
                     result.Add(st);
                 }
@@ -151,7 +151,7 @@ namespace WebApplication1.Controllers.Watertank
             }
             else
             {
-                foreach (String st in steps[0])
+                foreach (String st in steps[1])
                 {
                     result.Add(st);
                 }
