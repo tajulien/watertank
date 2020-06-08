@@ -8,7 +8,7 @@
 </div>
 <br />
 
-==> Next Improvement: Working on N-Tank management. ![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg) 
+==> Next Improvement: Working on N-Tank management in Java. 
 
 ## Java 
 ###  Files in src folder   
@@ -65,10 +65,22 @@ where :\
 `args2` : Tank volume 2\
 `args3` : Volume desired
 
+- __watertank_n_tank.py__ \
+Python version of the BFS algorithm for N-watertank !
+![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg) 
+
+To start watertank_ntank.py :
+```
+> python watertank_n_tank.py args1 args2 args3 args4 ....
+```
+where :\
+`args1` : Volume desired \
+`args2` : Numbers of Tank \
+`args3 to N` : Tank volume 3 to N 
 
 ## Web API ASP.Net
 ###  MVC files only
-- Views:  Classic view might be improved with some images or arts representing Tanks level.\
-- Controller: Working but might be improved with a better algorithm (such as the BFS one). \
-- Models: N/A \
+- Views:  Classic view might be improved with some images or arts representing Tanks level.
+- Controller: Working but might be improved with a better algorithm (such as the BFS one). 
+- Models: N/A 
 
