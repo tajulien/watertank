@@ -8,6 +8,8 @@
 </div>
 <br />
 
+==> Next Improvement: Working on N-Tank management. ![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg) 
+
 ## Java 
 ###  Files in src folder   
 - __Watertank.java__ \
@@ -62,3 +64,11 @@ where :\
 `args1` : Tank volume 1 \
 `args2` : Tank volume 2\
 `args3` : Volume desired
+
+
+## Web API ASP.Net
+###  MVC files only
+- Views:  Classic view might be improved with some images or arts representing Tanks level.\
+- Controller: Working but might be improved with a better algorithm (such as the BFS one). \
+- Models: N/A \
+
