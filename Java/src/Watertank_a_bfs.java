@@ -18,11 +18,11 @@ public class Watertank_a_bfs {
         containers_volume.add(Integer.parseInt(args[1]));
         int vol_wanted=Integer.parseInt(args[2]);
 
-        ArrayList <ArrayList<Integer>> starting_node=new ArrayList<>();
+        ArrayList starting_node=new ArrayList<>();
         ArrayList <Integer> starting_node_temp=new ArrayList<>();
         starting_node_temp.add(0);
         starting_node_temp.add(0);
-        starting_node=(ArrayList) starting_node_temp;
+        starting_node= starting_node_temp;
         HashMap check_dict = new HashMap();
 
 
@@ -141,7 +141,7 @@ public class Watertank_a_bfs {
         ArrayList result=new ArrayList<>();
         ArrayList<ArrayList> next_node=new ArrayList<>();
         ArrayList<Integer> node=new ArrayList<>();
-        ArrayList last_path = new ArrayList();
+        ArrayList last_path;
 
         int max_first_cont= (int) containers_volume.get(0);
         int max_second_cont= (int) containers_volume.get(1);
@@ -271,7 +271,9 @@ public class Watertank_a_bfs {
         for(int i =0; i<path.size()-1; i++)
         {
             write_transition((ArrayList) path.get(i), (ArrayList) path.get(i+1));
-            System.out.println(path.get(i+1));
+            String step = new String();
+            step = path.get(i+1).toString().replaceAll("\\[","\\(").replaceAll("\\]","\\)");
+            System.out.println(step);
         }
     }
 
