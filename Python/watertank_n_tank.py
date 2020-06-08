@@ -2,20 +2,15 @@ import collections
 import sys
 
 # Getting parameters
-vol_wanted = 11
-containers_count = 4
-containers_volume = [5, 12, 4,22]
+vol_wanted = int(sys.argv[1])
+containers_count = int(sys.argv[2])
+containers_volume = []
+for i in range(0, containers_count):
+    containers_volume.append(int(sys.argv[i+3]))
 check_dict = {}
 starting_node = [[]]
 for i in range(0, containers_count):
     starting_node[0].append(0)
-
-
-# # GCD function needed to check if there is a solution
-# def gcd(a, b):
-#     if b == 0:
-#         return a
-#     return gcd(b, a % b)
 
 
 # def check_args(cont_vol, vol_wanted):
@@ -45,10 +40,6 @@ def search(starting_node, containers_volume, vol_wanted, check_dict):
         path = q.popleft()
         check_dict[get_index(path[-1])] = True
 
-        # print other path
-        # if len(path) >= 2:
-        #    print(transition(path[-2], path[-1], containers_volume), path[-1])
-
         # If target is reached, exit the loop
         if is_vol_wanted(path, vol_wanted):
             accomplished = True
@@ -56,8 +47,6 @@ def search(starting_node, containers_volume, vol_wanted, check_dict):
             break
 
         # If target no reached, getting the next move
-        # print(containers_volume)
-        # print(path)
         next_moves = next_step(containers_volume, path, check_dict)
         for i in next_moves:
             q.append(i)
@@ -65,7 +54,6 @@ def search(starting_node, containers_volume, vol_wanted, check_dict):
     # If accomplished, print the path
     if accomplished:
         print_path(target)
-        print(target)
     else:
         print("No Solution")
         return
@@ -118,17 +106,6 @@ def next_step(containers_volume, path, check_dict):
                 new_node[j] = (new_node[j] - (new_node[i] - containers_status[i]))
                 if not been_there(new_node, check_dict):
                     next_nodes.append(new_node)
-                new_node = []
-
-    # for i in range(0, containers_count):
-    #     for j in range(0, containers_count):
-    #         if j != i:
-    #             new_node = containers_status[:]
-    #             new_node[j] = (min(new_node[i] + new_node[j], max_containers_vol[j], ))
-    #             new_node[i] = (new_node[i] - (new_node[j] - containers_status[j]))
-    #             if not been_there(new_node, check_dict):
-    #                 next_nodes.append(new_node)
-    #             new_node = []
 
     # Create the list of possible next path
     for i in range(0, len(next_nodes)):
@@ -140,34 +117,27 @@ def next_step(containers_volume, path, check_dict):
 
 
 def write_transition(old, new):
-    first_cont = old[0]
-    second_cont = old[1]
-    new_first_cont = new[0]
-    new_second_cont = new[1]
-
-    if first_cont > new_first_cont:
-        if second_cont == new_second_cont:
-            return f'A->* :'
+    alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"]
+    diff_count = []
+    for index, (first, second) in enumerate(zip(old, new)):
+        if first != second:
+            diff_count.append(index)
+    if len(diff_count) == 1:
+        if new[diff_count[0]] == 0:
+            return f'{alphabet[diff_count[0]]}->*'
         else:
-            return f'A->B :'
+            return f'*->{alphabet[diff_count[0]]}'
     else:
-        if second_cont > new_second_cont:
-            if first_cont == new_first_cont:
-                return f'B->* :'
-            else:
-                return f'B->A :'
+        if new[diff_count[0]] > old[diff_count[0]]:
+            return f'{alphabet[diff_count[1]]}->{alphabet[diff_count[0]]}'
         else:
-            if first_cont == new_first_cont:
-                return f'*->B :'
-            else:
-                return f'*->A :'
+            return f'{alphabet[diff_count[0]]}->{alphabet[diff_count[1]]}'
 
 
 def print_path(path):
     print(f'Solution in {len(path) - 1} steps')
-    #for i in range(0, len(path) - 1):
-    #    # print(i + 1, ":", transition(path[i], path[i + 1], containers_volume), path[i + 1])
-    #    print(write_transition(path[i], path[i + 1]), tuple(path[i + 1]))
+    for i in range(0, len(path) - 1):
+        print(write_transition(path[i], path[i + 1]), tuple(path[i + 1]))
 
 
 def is_vol_wanted(path, vol_wanted):
