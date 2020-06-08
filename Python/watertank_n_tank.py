@@ -2,9 +2,9 @@ import collections
 import sys
 
 # Getting parameters
-vol_wanted = 4
+vol_wanted = 11
 containers_count = 4
-containers_volume = [5, 7, 8, 6]
+containers_volume = [5, 12, 4,22]
 check_dict = {}
 starting_node = [[]]
 for i in range(0, containers_count):
@@ -56,6 +56,8 @@ def search(starting_node, containers_volume, vol_wanted, check_dict):
             break
 
         # If target no reached, getting the next move
+        # print(containers_volume)
+        # print(path)
         next_moves = next_step(containers_volume, path, check_dict)
         for i in next_moves:
             q.append(i)
@@ -63,6 +65,7 @@ def search(starting_node, containers_volume, vol_wanted, check_dict):
     # If accomplished, print the path
     if accomplished:
         print_path(target)
+        print(target)
     else:
         print("No Solution")
         return
@@ -79,24 +82,23 @@ def next_step(containers_volume, path, check_dict):
 
     result = []
     next_nodes = []
-    node = []
     max_containers_vol = []
     containers_status = []
     the_node =[]
 
     for i in range(0, containers_count):
-        max_containers_vol[i] = containers_volume[i]
+        max_containers_vol.append(containers_volume[i])
 
     for i in range(0, containers_count):
-        containers_status[i] = path[-1][i]
+        containers_status.append(path[-1][i])
 
     # Filling tanks one by one and add the path
-    for j in range (0, containers_count):
+    for j in range(0, containers_count):
         for i in range(0, containers_count):
             the_node.append(containers_status[i])
         the_node[j] = max_containers_vol[j]
-        if not been_there(node, check_dict):
-            next_nodes.append(node)
+        if not been_there(the_node, check_dict):
+            next_nodes.append(the_node)
         the_node = []
 
     # Empty tank one by one and add the path
@@ -104,23 +106,29 @@ def next_step(containers_volume, path, check_dict):
         for i in range(0, containers_count):
             the_node.append(containers_status[i])
         the_node[j] = 0
-        if not been_there(node, check_dict):
-            next_nodes.append(node)
+        if not been_there(the_node, check_dict):
+            next_nodes.append(the_node)
         the_node = []
 
-    # TODO Transfer n tank to n other tank (B => A)
-    # node.append(min(max_first_cont, first_cont + second_cont))
-    # node.append(second_cont - (node[0] - first_cont))
-    # if not been_there(node, check_dict):
-    #     next_nodes.append(node)
-    # node = []
-    #
-    # ## TODO  reverse transfer (A => B)
-    # node.append(min(first_cont + second_cont, max_second_cont))
-    # node.insert(0, first_cont - (node[0] - second_cont))
-    # if not been_there(node, check_dict):
-    #     next_nodes.append(node)
-    # node = []
+    for i in range(0, containers_count):
+        for j in range(0, containers_count):
+            if j != i:
+                new_node = containers_status[:]
+                new_node[i] = (min(max_containers_vol[i], new_node[i] + new_node[j]))
+                new_node[j] = (new_node[j] - (new_node[i] - containers_status[i]))
+                if not been_there(new_node, check_dict):
+                    next_nodes.append(new_node)
+                new_node = []
+
+    # for i in range(0, containers_count):
+    #     for j in range(0, containers_count):
+    #         if j != i:
+    #             new_node = containers_status[:]
+    #             new_node[j] = (min(new_node[i] + new_node[j], max_containers_vol[j], ))
+    #             new_node[i] = (new_node[i] - (new_node[j] - containers_status[j]))
+    #             if not been_there(new_node, check_dict):
+    #                 next_nodes.append(new_node)
+    #             new_node = []
 
     # Create the list of possible next path
     for i in range(0, len(next_nodes)):
@@ -157,9 +165,9 @@ def write_transition(old, new):
 
 def print_path(path):
     print(f'Solution in {len(path) - 1} steps')
-    for i in range(0, len(path) - 1):
-        # print(i + 1, ":", transition(path[i], path[i + 1], containers_volume), path[i + 1])
-        print(write_transition(path[i], path[i + 1]), tuple(path[i + 1]))
+    #for i in range(0, len(path) - 1):
+    #    # print(i + 1, ":", transition(path[i], path[i + 1], containers_volume), path[i + 1])
+    #    print(write_transition(path[i], path[i + 1]), tuple(path[i + 1]))
 
 
 def is_vol_wanted(path, vol_wanted):
@@ -177,24 +185,5 @@ def get_index(node):
         result_ind *= (3+i) ** node[i]
     return result_ind
 
-# print(is_vol_wanted([[1,0,0,4]],4))
-# search(starting_node, containers_volume, vol_wanted, check_dict)
-def test():
-    the_node = []
-    max_containers_vol = [5,7,9,4]
-    j=0
-    containers_status = [5, 7, 9, 4]
-    next_node = []
-    for j in range (0, containers_count):
-        for i in range(0, containers_count):
-            the_node.append(containers_status[i])
-        print("the node",the_node,"now j",j)
-        print("themaxcontj",max_containers_vol[j])
-        print("thenodedej",the_node[j])
-        the_node[j] = 0
-        print("the node apres j",the_node)
-        next_node.append(the_node)
-        the_node=[]
-    print(next_node)
 
-test()
+(search(starting_node,containers_volume,vol_wanted,check_dict))
