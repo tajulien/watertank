@@ -8,7 +8,7 @@
 </div>
 <br />
 
-==> Next Improvement: Working on N-Tank management in Java. 
+==> Next Improvement: Using another algorithm to solve the enigma
 
 ## Java 
 ###  Files in src folder   
@@ -37,6 +37,18 @@ where :\
 `args2` : Tank volume 2\
 `args3` : Volume desired
 
+- __Watertank_n_tank.java__ \
+Java version of the BFS algorithm for N-watertank !
+![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg) 
+
+To start Watertank_n_tank.java :
+```
+Watertank\src> java Watertank_n_tank args1 args2 args3 args4 ....
+```
+where :\
+`args1` : Volume desired \
+`args2` : Numbers of Tank \
+`args3 to N` : Tank volume 3 to N 
 
 ## Python
 ###  Files in Python folder   
@@ -69,7 +81,7 @@ where :\
 Python version of the BFS algorithm for N-watertank !
 ![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg) 
 
-To start watertank_ntank.py :
+To start watertank_n_tank.py :
 ```
 > python watertank_n_tank.py args1 args2 args3 args4 ....
 ```
