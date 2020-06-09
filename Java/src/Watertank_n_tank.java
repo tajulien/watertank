@@ -20,8 +20,6 @@ public class Watertank_n_tank {
         }
         HashMap<Double, Boolean>  check_dict = new HashMap<>();
 
-
-
         search(starting_node, containers_volume, vol_wanted, check_dict,containers_count);
 
     }
@@ -93,7 +91,6 @@ public class Watertank_n_tank {
     {
         ArrayList result=new ArrayList<>();
         ArrayList<ArrayList<Integer>> next_nodes=new ArrayList<>();
-        ArrayList<Integer> node=new ArrayList<>();
         ArrayList<Integer> last_path;
         ArrayList<Integer> max_containers_volume = new ArrayList<>();
         ArrayList<Integer> containers_status = new ArrayList<>();
@@ -162,7 +159,6 @@ public class Watertank_n_tank {
             chars.add(ch);
         ArrayList<Integer> index_change = new ArrayList<>();
         int diff_count_numb = 0;
-        ArrayList<Integer> diff_count = new ArrayList<>();
         for (int i = 0; i < old.size(); i++) {
             if (old.get(i) != m_new.get(i)) {
                 diff_count_numb = diff_count_numb + 1;
