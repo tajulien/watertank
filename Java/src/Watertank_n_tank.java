@@ -1,7 +1,8 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.swing.*;
+import java.util.*;
 
-// dynamic programming method using Breadth-First Search (BFS) Algorithm
+// dynamic programming method using Breadth-First Search (BFS) Algorithm working with N tank.
+// java Watertank_n_tank args1(vol_wanted) args2(number of tanks) args3+ (tank volumes)
 
 public class Watertank_n_tank {
 
@@ -71,7 +72,7 @@ public class Watertank_n_tank {
         if(accomplished)
         {
             print_path(target);
-            System.out.println(target);
+            //System.out.println(target);
         }
         else
         {
@@ -154,60 +155,44 @@ public class Watertank_n_tank {
 
     }
 
-    public static void write_transition(ArrayList<Integer> old, ArrayList<Integer> m_new)
-    {
-        int first_cont= old.get(0);
-        int second_cont= old.get(1);
-        int new_first_cont= m_new.get(0);
-        int new_second_cont= m_new.get(1);
-
-        if(first_cont>new_first_cont){
-            if(second_cont==new_second_cont)
-            {
-                System.out.print("A->* : ");
-            }
-            else
-            {
-                System.out.print("A->B : ");
-            }
-
-        }
-        else
-        {
-            if (second_cont > new_second_cont) {
-                if (first_cont == new_first_cont){
-                    System.out.print("B->* : ");
-                }
-                else
-                {
-                    System.out.print("B->A : ");
-                }
-            }
-            else
-            {
-                if(first_cont == new_first_cont)
-                {
-                    System.out.print("*->B : ");
-                }
-                else
-                {
-                    System.out.print("*->A : ");
-                }
+    public static void write_transition(ArrayList<Integer> old, ArrayList<Integer> m_new) {
+        ArrayList<Character> chars = new ArrayList<>();
+        char[] alphabet = "ABCDEFGHIJKLMN".toCharArray();
+        for (char ch : alphabet)
+            chars.add(ch);
+        ArrayList<Integer> index_change = new ArrayList<>();
+        int diff_count_numb = 0;
+        ArrayList<Integer> diff_count = new ArrayList<>();
+        for (int i = 0; i < old.size(); i++) {
+            if (old.get(i) != m_new.get(i)) {
+                diff_count_numb = diff_count_numb + 1;
+                index_change.add(i);
             }
         }
+        if (diff_count_numb == 1) {
+            if (m_new.get(index_change.get(0)) == 0)
+                System.out.print(chars.get(index_change.get(0)) + "->*");
+            else System.out.print("*->" + chars.get(index_change.get(0)));
 
+        } else {
+            if (m_new.get(index_change.get(0)) > old.get(index_change.get(0)))
+                System.out.print(chars.get(index_change.get(1)) + "->" + chars.get(index_change.get(0)));
+            else
+                System.out.print(chars.get(index_change.get(0)) + "->" + chars.get(index_change.get(1)));
+        }
     }
 
-    public static  void print_path(ArrayList<ArrayList<Integer>> path)
+
+    public static void print_path(ArrayList<ArrayList<Integer>> path)
     {
         System.out.println("Solution in "+(path.size()-1)+" steps");
-//        for(int i =0; i<path.size()-1; i++)
-//        {
-//            write_transition(path.get(i), path.get(i+1));
-//            String step;
-//            step = path.get(i+1).toString().replaceAll("\\[","\\(").replaceAll("]","\\)");
-//            System.out.println(step);
-//        }
+        for(int i =0; i<path.size()-1; i++)
+        {
+            write_transition(path.get(i), path.get(i+1));
+            String step;
+            step = path.get(i+1).toString().replaceAll("\\["," \\(").replaceAll("]","\\)");
+            System.out.println(step);
+        }
     }
 
     public static boolean is_vol_wanted(ArrayList<ArrayList<Integer>> path, int vol_wanted, int containers_count)
@@ -236,6 +221,7 @@ public class Watertank_n_tank {
         }
         return result_ind;
     }
+
 }
 
 
