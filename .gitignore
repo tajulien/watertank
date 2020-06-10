@@ -108,3 +108,5 @@ fabric.properties
 *.war
 *.ear
 
+Java/src/testclass.class
+Java/src/testclass.java
