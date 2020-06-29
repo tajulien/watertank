@@ -6,6 +6,8 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 
+// not my solution but comes from Quentin
+
 namespace ConsoleApplication1
 {
     class Watertank_try_n
