@@ -6,7 +6,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 
-// not my solution but comes from Quentin
+// tweaking explicit sol from Quentin, trying to build the path
 
 namespace ConsoleApplication1
 {
@@ -19,15 +19,22 @@ namespace ConsoleApplication1
 
         public static void Main(String[] args)
         {
-            vol_wanted = 9;
-            containers_count = 3;
+            vol_wanted = 4;
+            containers_count = 2;
             containers_volume = new int[containers_count];
             //for (int i = 0; i < containers_count; i++)
-            containers_volume[0] = 7;
-            containers_volume[1] = 8;
-            containers_volume[2] = 11;
+            containers_volume[0] = 5;
+            containers_volume[1] = 3;
+            // containers_volume[2] = 3;
             var x = Find().ToString();
-            Console.WriteLine("Solution in " + x + " steps");
+            if (x=="0")
+            {
+                Console.WriteLine("No solution");
+            }
+            else
+            {
+                Console.WriteLine("Solution in " + x + " steps");
+             }
         }
 
 
@@ -36,16 +43,17 @@ namespace ConsoleApplication1
             return ((IStructuralEquatable)array).GetHashCode(EqualityComparer<int>.Default);
         }
 
-        public static int[] Do(List<int[]> S, HashSet<int> H, int[] p, Action<int[]> action)
+        public static int[] CheckExist(List<int[]> big_List, HashSet<int> Hashindex, int[] p, Action<int[]> action)
         {
             var s = p.Clone() as int[];
             action(s);
-            var h = GetHashCode(s);
-            if (!H.Contains(h))
+            var hashed = GetHashCode(s);
+            if (!Hashindex.Contains(hashed))
             {
-                H.Add(h);
-                S.Add(s);
+                Hashindex.Add(hashed);
+                big_List.Add(s);
             }
+            //Console.WriteLine(Hashindex);
             return s;
         }
 
@@ -53,43 +61,46 @@ namespace ConsoleApplication1
         {
             if (vol_wanted == 0)
                 return 0;
-            var P = new List<int[]> { new int[containers_count] };
+            var step_list = new List<int[]> { new int[containers_count] };
             int count = 0;
             while (++count > 0)
             {
-                var S = new List<int[]>();
-                var H = new HashSet<int>();
-                foreach (var p in P)
+                var big_List = new List<int[]>();
+                var Hashindex = new HashSet<int>();
+                foreach (var sub_list in step_list)
                 {
                     for (int i = 0; i < containers_count; i++)
                     {
-                        if (p[i] > 0 && p.Sum() > p[i])
+                        if (sub_list[i] > 0 && sub_list.Sum() > sub_list[i])
                         {
-                            Do(S, H, p, o => o[i] = 0);
+                            CheckExist(big_List, Hashindex, sub_list, o => o[i] = 0);
                         }
-                        if (p[i] < containers_volume[i])
+                        if (sub_list[i] < containers_volume[i])
                         {
-                            var s = Do(S, H, p, o => o[i] = containers_volume[i]);
-                            if (s[i] == vol_wanted)
+                            var path = CheckExist(big_List, Hashindex, sub_list, o => o[i] = containers_volume[i]);
+                            Console.WriteLine(path[i]);
+                            if (path[i] == vol_wanted)
                                 return count;
                         }
                         for (int j = 0; j < containers_count; j++)
                         {
                             if (i == j)
                                 continue;
-                            if (p[j] < containers_volume[j])
+                            if (sub_list[j] < containers_volume[j])
                             {
-                                var s = Do(S, H, p, o => {
-                                    o[j] = Math.Min(p[j] + p[i], containers_volume[j]);
-                                    o[i] = p[i] - o[j] + p[j];
+                                
+                                var path = CheckExist(big_List, Hashindex, sub_list, o => {
+                                    o[j] = Math.Min(sub_list[j] + sub_list[i], containers_volume[j]);
+                                    o[i] = sub_list[i] - o[j] + sub_list[j];
                                 });
-                                if (s[i] == vol_wanted || s[j] == vol_wanted)
+                                Console.WriteLine(path[i] + " "+ path[j]);
+                                if (path[i] == vol_wanted || path[j] == vol_wanted)
                                     return count;
                             }
                         }
                     }
                 }
-                P = S;
+                step_list = big_List;
             }
             return 0;
         }
